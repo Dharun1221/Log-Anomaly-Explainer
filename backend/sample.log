@@ -1,0 +1,8 @@
+INFO Application Started
+INFO Database Connected
+INFO User Login
+
+ERROR Database Timeout
+
+INFO Retry Attempt
+INFO Service Stopped
