@@ -1,13 +1,10 @@
 services:
   - type: web
     name: log-anomaly-explainer
-    env: python
+    env: docker
     region: oregon
     plan: free
-    buildCommand: >
-      cd frontend && npm install && npm run build &&
-      cd ../backend && pip install -r requirements.txt
-    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     envVars:
       - key: GEMINI_API_KEY
         sync: false
