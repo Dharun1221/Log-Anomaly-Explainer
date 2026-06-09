@@ -1,15 +1,18 @@
 import { useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
 function App() {
   const [file, setFile] = useState(null);
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [severity, setSeverity] = useState("");
   const [logLines, setLogLines] = useState(0);
+  const [error, setError] = useState("");
 
   const handleUpload = async () => {
     if (!file) {
-      alert("Please select a log file");
+      setError("Please select a log file before analyzing.");
       return;
     }
 
@@ -17,19 +20,29 @@ function App() {
     formData.append("file", file);
 
     setLoading(true);
+    setError("");
+    setResult("");
 
-    const response = await fetch("http://127.0.0.1:8000/analyze", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch(`${API_URL}/analyze`, {
+        method: "POST",
+        body: formData,
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    setSeverity(data.severity);
-    setLogLines(data.log_lines);
-    setResult(data.analysis);
+      if (!response.ok) {
+        throw new Error(data.detail || `Server error: ${response.status}`);
+      }
 
-    setLoading(false);
+      setSeverity(data.severity);
+      setLogLines(data.log_lines);
+      setResult(data.analysis);
+    } catch (err) {
+      setError(err.message || "An unexpected error occurred while analyzing the log file.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

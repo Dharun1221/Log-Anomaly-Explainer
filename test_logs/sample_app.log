@@ -1,0 +1,29 @@
+2026-06-09 10:00:01 INFO  [main] Application starting up...
+2026-06-09 10:00:02 INFO  [main] Loading configuration from config.yaml
+2026-06-09 10:00:03 INFO  [db] Connecting to database at localhost:5432
+2026-06-09 10:00:04 INFO  [db] Database connection established successfully
+2026-06-09 10:00:05 INFO  [server] HTTP server listening on port 8080
+2026-06-09 10:01:12 INFO  [api] GET /health -> 200 OK (2ms)
+2026-06-09 10:02:34 INFO  [api] POST /users -> 201 Created (45ms)
+2026-06-09 10:03:21 INFO  [api] GET /users/42 -> 200 OK (8ms)
+2026-06-09 10:04:55 INFO  [cache] Cache miss for key user_session_99
+2026-06-09 10:05:10 INFO  [cache] Cache hit for key user_session_42
+2026-06-09 10:06:33 WARNING [db] Slow query detected (query_time=2340ms): SELECT * FROM orders WHERE user_id=42
+2026-06-09 10:07:01 INFO  [api] GET /orders -> 200 OK (2345ms)
+2026-06-09 10:07:45 WARNING [db] Connection pool running low (active=18/20)
+2026-06-09 10:08:02 INFO  [worker] Background job started: send_email_notifications
+2026-06-09 10:08:15 ERROR [db] Failed to acquire database connection from pool after 5000ms timeout
+Traceback (most recent call last):
+  File "/app/services/order_service.py", line 87, in get_user_orders
+    conn = db_pool.acquire(timeout=5)
+  File "/app/db/pool.py", line 134, in acquire
+    raise TimeoutError("Connection pool exhausted. No available connections after 5000ms.")
+TimeoutError: Connection pool exhausted. No available connections after 5000ms.
+2026-06-09 10:08:15 ERROR [api] POST /checkout -> 500 Internal Server Error
+2026-06-09 10:08:16 WARNING [server] Retrying request for /checkout (attempt 1/3)
+2026-06-09 10:08:21 ERROR [db] Retry failed — database still unreachable
+2026-06-09 10:08:26 CRITICAL [server] Maximum retry attempts exceeded. Service degraded.
+2026-06-09 10:08:27 INFO  [monitor] Alert sent to ops team via PagerDuty
+2026-06-09 10:09:00 INFO  [db] Stale connections cleaned up, pool reset (active=0/20)
+2026-06-09 10:09:05 INFO  [server] Service recovered. Resuming normal operations.
+2026-06-09 10:10:00 INFO  [api] GET /health -> 200 OK (3ms)
