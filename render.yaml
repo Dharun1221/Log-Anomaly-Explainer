@@ -10,4 +10,19 @@ services:
       - key: GEMINI_API_KEY
         sync: false
       - key: ALLOWED_ORIGINS
-        value: https://your-frontend-domain.vercel.app,http://localhost:5173
+        sync: false
+
+  - type: web
+    name: log-anomaly-explainer-frontend
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

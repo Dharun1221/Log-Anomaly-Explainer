@@ -19,9 +19,12 @@ SEVERITY_KEYWORDS = ["FATAL", "CRITICAL", "ERROR", "EXCEPTION", "TRACEBACK"]
 
 app = FastAPI(title="Log Anomaly Explainer API")
 
+_raw_origins = os.getenv("ALLOWED_ORIGINS", "").strip()
+_allow_origins = [o.strip() for o in _raw_origins.split(",") if o.strip()] or ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_allow_origins,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
