@@ -1,8 +1,7 @@
-INFO Application Started
-INFO Database Connected
-INFO User Login
-
-ERROR Database Timeout
-
-INFO Retry Attempt
-INFO Service Stopped
+2026/06/12 10:15:30 [notice] 14320#14320: using inherited sockets from "6;7;"
+2026/06/12 10:15:32 [warn] 14321#0: "ssl_stapling" ignored, issuer certificate not found
+2026/06/12 10:18:05 [error] 14322#0: *12 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 192.168.1.45, server: example.com, request: "GET /favicon.ico HTTP/1.1", host: "example.com"
+2026/06/12 10:22:14 [crit] 14322#0: *45 open() "/var/www/html/secure/data.txt" failed (13: Permission denied), client: 203.0.113.88, server: example.com, request: "GET /secure/data.txt HTTP/1.1", host: "example.com"
+2026/06/12 10:35:50 [error] 14322#0: *89 connect() to unix:/var/run/php/php8.3-fpm.sock failed (2: No such file or directory) while connecting to upstream, client: 198.51.100.12, server: example.com, request: "POST /login.php HTTP/1.1", upstream: "fastcgi://unix:/var/run/php/php8.3-fpm.sock:", host: "example.com"
+2026/06/12 10:42:11 [error] 14322#0: *104 upstream timed out (110: Connection timed out) while connecting to upstream, client: 192.168.1.99, server: api.example.com, request: "GET /api/v1/users HTTP/1.1", upstream: "http://127.0.0", host: "api.example.com"
+2026/06/12 11:01:15 [alert] 14321#0: *150 1024 worker_connections are not enough while accepting new connection
